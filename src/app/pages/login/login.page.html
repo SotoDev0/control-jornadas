@@ -1,0 +1,31 @@
+<ion-content>
+  <div class="header">
+    <div class="title ion-text-center">
+      <img src="../../../assets/icon/logo.png" alt="">
+      <h1 class="txtTitulo">Titulo</h1>
+    </div>
+  </div>
+
+  <div class="login-container">
+    
+        <ion-item>
+          <ion-input  [(ngModel)]="email" type="email" aria-label="Light input" color="light"type="text" labelPlacement="stacked" placeholder="Email">
+            <ion-icon slot="start" name="person"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input [(ngModel)]="password" type="password" aria-label="Light input" color="light"  labelPlacement="stacked" placeholder="Contraseña">
+            <ion-icon slot="start" name="key"></ion-icon>
+            <ion-input-password-toggle slot="end" color="light"></ion-input-password-toggle>
+          </ion-input>
+        </ion-item>
+
+      <div class="ion-text-center fade-in">
+        <ion-button  id="present-alert" (click)="login()" class="btnLogin"  expand="block">Iniciar sesión</ion-button>
+        <p class="txtRegister"><a routerLink="/register">¿No tienes una cuenta? </a></p>
+        <p class="txtRegister"><a routerLink="/recover">¿Olvidó la contraseña?</a></p>
+      </div>
+      
+    </div>
+  
+</ion-content>
