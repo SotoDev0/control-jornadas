@@ -1,0 +1,22 @@
+<ion-content>
+  <div class="container">
+    <!-- Buscador -->
+    <ion-searchbar
+      placeholder="Buscar por nombre o RUT"
+      debounce="500"
+      (ionInput)="onSearch($event)">
+    </ion-searchbar>
+
+    <!-- Historial de asistencia -->
+    <div *ngIf="filteredHistorial.length > 0">
+      <ion-list>
+        <ion-item *ngFor="let item of filteredHistorial">
+          <ion-label>
+            <h3>{{ item.nombre }} {{ item.apellido }}</h3>
+            <p>{{ item.fecha }} - {{ item.horaInicio }} - {{ item.horaFin }} - {{ item.estado }} - {{ item.totalTiempo }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div> <!-- Asegúrate de cerrar correctamente cualquier contenedor -->
+</ion-content>
