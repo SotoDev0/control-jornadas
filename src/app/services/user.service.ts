@@ -20,7 +20,7 @@ export class UserService {
         password: '2468Pr..',
         repeat_password: '2468Pr..',
         sucursal: 'Puente alto',
-        tipo_usuario: 'admin',};
+        tipo_usuario: 'administrador',};
         await this.createUser(admin);
     }
 
@@ -99,4 +99,7 @@ export class UserService {
         return null; // Maneja errores retornando null
       });
   }
+
+
+  
 }

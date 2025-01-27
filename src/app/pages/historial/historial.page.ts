@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-historial',
@@ -7,39 +8,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistorialPage implements OnInit {
   searchQuery: string = '';
-  historial: any[] = []; // Historial completo desde localStorage
+  historial: any[] = []; // Historial completo desde Firebase
   filteredHistorial: any[] = []; // Historial filtrado
   startDate: string = ''; // Fecha de inicio seleccionada
   endDate: string = ''; // Fecha de fin seleccionada
-  isDatePickerOpen: boolean = false; // Estado del modal de selección de fechas
-  minDate: string = ''; // Fecha mínima para seleccionar
-  maxDate: string = ''; // Fecha máxima para seleccionar
 
-  constructor() {
-    // Establecemos un rango de fechas más amplio para el calendario
-    const currentDate = new Date();
-    this.minDate = new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)).toISOString();  // Un año atrás
-    this.maxDate = new Date().toISOString();  // Fecha actual
-    this.loadHistorial();  // Cargar historial de asistencia al iniciar
+  constructor(private fireStore: AngularFirestore) {}
+
+  ngOnInit() {
+    this.loadHistorial(); // Cargar historial de asistencia desde Firebase
   }
 
-  ngOnInit() {}
-
-  // Cargar el historial desde localStorage
+  // Cargar historial desde Firebase
   loadHistorial() {
-    const historial = JSON.parse(localStorage.getItem('historial') || '[]');
-    this.historial = historial;
-    this.filteredHistorial = historial;  // Inicialmente mostrar todo el historial
+    this.fireStore
+      .collection('asistencias') // Colección de asistencias en Firebase
+      .valueChanges({ idField: 'id' }) // Incluye el ID del documento
+      .subscribe((data: any[]) => {
+        this.historial = data; // Asignar los datos obtenidos
+        this.filteredHistorial = data; // Inicializar el historial filtrado
+      });
   }
 
-  // Método para filtrar el historial por nombre, apellido o fecha  
+  // Método para buscar por nombre o RUT
   onSearch(event: any) {
     const query = event.detail.value.toLowerCase();
-    this.filteredHistorial = this.historial.filter(item =>
-      item.nombre.toLowerCase().includes(query) ||
-      item.apellido.toLowerCase().includes(query) ||
-      item.fecha.includes(query)
+    this.filteredHistorial = this.historial.filter((item) =>
+      item.nombre_empleado.toLowerCase().includes(query) ||
+      item.apellido_empleado.toLowerCase().includes(query) ||
+      item.empleado_id.includes(query)
     );
   }
-}
 
+}

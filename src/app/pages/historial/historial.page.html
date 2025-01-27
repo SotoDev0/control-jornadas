@@ -7,16 +7,27 @@
       (ionInput)="onSearch($event)">
     </ion-searchbar>
 
+ 
     <!-- Historial de asistencia -->
     <div *ngIf="filteredHistorial.length > 0">
       <ion-list>
         <ion-item *ngFor="let item of filteredHistorial">
           <ion-label>
-            <h3>{{ item.nombre }} {{ item.apellido }}</h3>
-            <p>{{ item.fecha }} - {{ item.horaInicio }} - {{ item.horaFin }} - {{ item.estado }} - {{ item.totalTiempo }}</p>
+            <h3>{{ item.nombre_empleado }} {{ item.apellido_empleado }}</h3>
+            <p>
+              <strong>RUT:</strong> {{ item.empleado_id }}<br>
+              <strong>Fecha Inicio:</strong> {{ item.fecha_inicio.toDate() | date: 'short' }}<br>
+              <strong>Fecha Fin:</strong> {{ item.fecha_fin ? (item.fecha_fin.toDate() | date: 'short') : 'N/A' }}<br>
+              <strong>Estado:</strong> {{ item.estado }}
+            </p>
           </ion-label>
         </ion-item>
       </ion-list>
     </div>
-  </div> <!-- Asegúrate de cerrar correctamente cualquier contenedor -->
+
+    <!-- Mensaje si no hay resultados -->
+    <div *ngIf="filteredHistorial.length === 0" class="no-results">
+      <p>No se encontraron resultados. Ajusta los filtros o realiza otra búsqueda.</p>
+    </div>
+  </div>
 </ion-content>
