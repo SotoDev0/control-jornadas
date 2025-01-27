@@ -22,7 +22,8 @@ const routes: Routes = [
   {
     path: 'historial',
     loadChildren: () => import('./pages/historial/historial.module').then( m => m.HistorialPageModule)
-  },  {
+  },
+  {
     path: 'administracion',
     loadChildren: () => import('./pages/administracion/administracion.module').then( m => m.AdministracionPageModule)
   },
